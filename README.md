@@ -17,5 +17,5 @@ docker compose up -d
 ```
 4) Run the Server
 ```
-npm install
+npm run dev 
 ```
