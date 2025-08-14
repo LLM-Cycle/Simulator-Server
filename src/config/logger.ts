@@ -1,5 +1,6 @@
 import winston , { createLogger, format, transports } from 'winston';
 import expressWinston from 'express-winston'; 
+import LokiTransport from 'winston-loki';
 
 const logger = createLogger({
   level: 'info',
@@ -13,7 +14,12 @@ const logger = createLogger({
   transports: [
     new transports.Console(),
     new transports.File({ filename: 'src/logs/error.log', level: 'error' }),
-    new transports.File({ filename: 'src/logs/combined.log' })
+    new transports.File({ filename: 'src/logs/combined.log' }),
+    new LokiTransport({
+      host: 'http://localhost:3100',  // Replace with your Loki server URL
+      labels: { job: 'node-app' },
+      json: true
+    })
   ]
 });
 
